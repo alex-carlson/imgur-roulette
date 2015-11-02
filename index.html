@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+<title>Imgur Roulette</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=BenchNine' rel='stylesheet' type='text/css'>
+<script src="jquery-1.11.0.min.js"></script>
+    <script type="text/javascript">
+        function randomString() {
+        	var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        	var string_length = 5;
+        	var randomstring = '';
+        	for (var i=0; i<string_length; i++) {
+        		var rnum = Math.floor(Math.random() * chars.length);
+        		randomstring += chars.substring(rnum,rnum+1);
+        	}
+        	document.randform.randomfield.value = randomstring;
+        	return randomstring;
+        }
+
+        $('*').click(function(){
+            getImageURL();
+        })
+
+        function getImageURL(){
+            var img = $('#randomImage');
+            img.css('opacity', 0);
+            img.attr("src", "http://i.imgur.com/" + randomString(5) + ".png");
+            img.load(function(){
+
+                if(img[0].width == 161 && img[0].height == 81){
+                    setTimeout(getImageURL(), 1000);
+                    return;
+                }
+                img.css('opacity', 1);
+            })
+        }
+    </script>
+    </head>
+<body>
+<img alt="random-image" src="rand.jpg" id="randomImage">
+<div id="hidden">
+<form name="randform">
+<input type="button" value="Create Random String" onClick="randomString();">&nbsp;
+<input type="text" name="randomfield" value="">
+</form>
+</div>
+</div>
+</body>
+</html>
